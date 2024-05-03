@@ -15,6 +15,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/store-post', [\App\Http\Controllers\HomeController::class, 'store'])->name('store.post');
+    Route::post('/store-image-ckeditor', [\App\Http\Controllers\ImageController::class, 'uploadCKEditorImage'])->name('store.image.ckeditor');
 });
 
 require __DIR__.'/auth.php';

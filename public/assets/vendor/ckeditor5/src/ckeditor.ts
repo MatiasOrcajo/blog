@@ -5,6 +5,7 @@
 
 import { ClassicEditor } from '@ckeditor/ckeditor5-editor-classic';
 
+import { SimpleUploadAdapter } from '@ckeditor/ckeditor5-upload';
 import { Autoformat } from '@ckeditor/ckeditor5-autoformat';
 import { Bold, Code, Italic } from '@ckeditor/ckeditor5-basic-styles';
 import { BlockQuote } from '@ckeditor/ckeditor5-block-quote';
@@ -40,6 +41,7 @@ class Editor extends ClassicEditor {
 		Bold,
 		Code,
 		CodeBlock,
+        SimpleUploadAdapter,
 		Essentials,
 		FontBackgroundColor,
 		Heading,
@@ -61,7 +63,8 @@ class Editor extends ClassicEditor {
 		Undo
 	];
 
-	public static override defaultConfig: EditorConfig = {
+	// @ts-ignore
+    public static override defaultConfig: EditorConfig = {
 		toolbar: {
 			items: [
 				'heading',
@@ -87,6 +90,16 @@ class Editor extends ClassicEditor {
 			]
 		},
 		language: 'en',
+        simpleUpload: {
+            // Enable the XMLHttpRequest.withCredentials property.
+            withCredentials: true,
+
+            // Headers sent along with the XMLHttpRequest to the upload server.
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                Authorization: 'Bearer <JSON Web Token>'
+            }
+        },
 		image: {
 			toolbar: [
 				'imageTextAlternative',
