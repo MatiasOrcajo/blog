@@ -10,13 +10,15 @@ class ImageController extends Controller
 
     /**
      * @param Request $request
-     * @return array
+     * @return \Illuminate\Http\JsonResponse
      */
     public function uploadCKEditorImage(Request $request)
     {
-        $path = Storage::put('images', $request->file('upload'));
 
-        return ['url' => Storage::url($path)];
+        $stored = $request->file('upload')->store('public/images');
+        $url      = Storage::url($stored);
+
+        return response()->json(['url' => $url]);
 
     }
 
